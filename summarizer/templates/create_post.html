@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Post</title>
+    <style>
+        form {
+            width: 300px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+        }
+        label {
+            display: block;
+            margin-top: 20px;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#create-post-form").validate({
+                rules: {
+                    title: {
+                        required: true,
+                        minlength: 3
+                    },
+                    content: {
+                        required: true,
+                        minlength: 10
+                    }
+                },
+                messages: {
+                    title: {
+                        required: "Please enter a title for your post.",
+                        minlength: "Your title must be at least 3 characters long."
+                    },
+                    content: {
+                        required: "Please enter some content for your post.",
+                        minlength: "Your content must be at least 10 characters long."
+                    }
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    {% extends 'base.html' %}
+
+    {% block title %}Create Post{% endblock %}
+
+    {% block content %}
+        <h1>Create Post</h1>
+        <form method="post">
+            {% csrf_token %}
+            <label for="title">Title(Start with "Summary of"):</label><br>
+            <input type="text" id="title" name="title"><br>
+            <label for="content">Content:</label><br>
+            <textarea id="content" name="content" rows="4" cols="50"></textarea><br>
+            <button type="submit">Submit</button>
+        </form>
+    {% endblock %}
+</body>
+</html>

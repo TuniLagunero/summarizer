@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}My Blog{% endblock %}</title>
+    <style>
+        nav {
+            background-color: #333;
+            padding: 10px;
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+        }
+        nav ul li {
+            margin-right: 10px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            padding: 12px 24px;
+            background-color: black;
+            color: white;
+            border-radius: 7px;
+            box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.1);
+            animation: pulse 1.75s infinite cubic-bezier(0.66, 0, 0, 1);
+        }
+
+
+        @keyframes pulse {
+            to {
+                box-shadow: 0 0 0 20px rgba(255, 255, 255, 0);
+            }
+        }
+        nav ul li a:hover {
+            background-color: #555;
+        }
+        @media (max-width: 600px) {
+            nav ul {
+                flex-direction: column;
+            }
+            nav ul li {
+                margin-right: 0;
+            }
+            nav ul li a {
+                display: block;
+                text-align: center;
+            }
+        }
+        .username a {
+            background-color: #555;
+            padding: 12px 24px;
+            border-radius: 7px;
+        }
+        .username {
+        position: relative;
+        }
+
+        .username a {
+        background-color: #555;
+        padding: 12px 24px;
+        border-radius: 7px;
+        color: white;
+        }
+
+        .dropdown {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: #333;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .username:hover .dropdown {
+        display: block;
+        }
+
+        .dropdown li {
+        margin: 0;
+        }
+
+        .dropdown li a {
+        padding: 12px 24px;
+        color: white;
+        }
+
+        .dropdown li a:hover {
+        background-color: #555;
+        }
+       
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            {% if user.is_authenticated %}
+              <li><a href="{% url 'index' %}">Home</a></li>
+              <li><a href="{% url 'create_post' %}">Create Post</a></li>
+              <li><a href="{% url 'admin:index' %}">Admin</a></li>
+              <li class="username">
+                <a href="#">{{ user.username }} <i class="fas fa-caret-down"></i></a>
+                <ul class="dropdown">
+
+                  <li><a href="{% url 'user_logout' %}">Log out</a></li>
+                </ul>
+              </li>
+            {% else %}
+                <li><a href="{% url 'login' %}">Log in</a></li>
+                <li><a href="{% url 'register' %}">Register</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+    <div>
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>
+
+
+
+
